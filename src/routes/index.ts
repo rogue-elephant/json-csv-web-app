@@ -7,10 +7,5 @@ export const registerRoutes = ( app: express.Application ) => {
         res.render( "index" );
     } );
 
-    // define a secure route handler for the guitars page
-    app.get( "/guitars", ( req: any, res ) => {
-        res.render( "guitars" );
-    } );
-
     api.registerRoutes(app);
 };

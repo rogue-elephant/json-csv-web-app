@@ -13,10 +13,6 @@ exports.registerRoutes = (app) => {
     app.get("/", (req, res) => {
         res.render("index");
     });
-    // define a secure route handler for the guitars page
-    app.get("/guitars", (req, res) => {
-        res.render("guitars");
-    });
     api.registerRoutes(app);
 };
 //# sourceMappingURL=index.js.map

@@ -9,10 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const json_csv_tool_1 = require("json-csv-tool");
 exports.registerRoutes = (app) => {
-    app.get('/api/jsontocsv', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    app.post('/api/jsontocsv', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        const converter = new json_csv_tool_1.JsonCsvConverter();
+        const convertedCsv = converter.convertJsonToCsv(req.body);
         res.json({
-            result: 'poop'
+            result: convertedCsv.csv
         });
     }));
 };
