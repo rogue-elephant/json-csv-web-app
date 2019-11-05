@@ -1,4 +1,8 @@
 # JsonCsvWebApp
+[![json-csv-tool npm](https://img.shields.io/badge/json--csv--tool-1.1.5-blue?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/json-csv-tool)
+
+![](https://img.shields.io/badge/using-typescript-008866?style=flat&logo=typescript)
+![](https://img.shields.io/badge/using-angular-008866?style=flat&logo=angular)
 
 Uses [json-csv-tool](https://www.npmjs.com/package/json-csv-tool) to convert Json (with options) into a rendered table (and at some point ability to download csv).
 
