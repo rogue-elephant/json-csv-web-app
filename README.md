@@ -1,5 +1,9 @@
 # JsonCsvWebApp
 
+Uses [json-csv-tool](https://www.npmjs.com/package/json-csv-tool) to convert Json (with options) into a rendered table (and at some point ability to download csv).
+
+![](readme.gif)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.17.
 
 ## Development server
