@@ -1,0 +1,99 @@
+<mat-toolbar color="primary">
+  <span>JSON&lt;-&gt;CSV</span>
+</mat-toolbar>
+
+<mat-horizontal-stepper>
+  <mat-step>
+    <ng-template matStepLabel>Enter JSON</ng-template>
+    <mat-grid-list cols="2" rowHeight="fit" style="height: calc(100vh - 200px);">
+      <mat-grid-tile>
+        <mat-form-field style="height: 100%; overflow: auto;">
+          <textarea
+            matInput
+            [(ngModel)]="jsonInput"
+            placeholder="Paste JSON here"
+            matTextareaAutosize
+            cols="50"
+            (keyup)="updateJsonModel()"
+          ></textarea>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <pre style="width: 100%; height: 100%; overflow: auto;">{{ jsonModel | json }}</pre>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <div>
+      <button mat-raised-button color="primary" matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Output</ng-template>
+
+    <div>
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Options
+            </mat-panel-title>
+            <mat-panel-description>
+              Configure the output
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <mat-form-field>
+            <input
+              matInput
+              [(ngModel)]="converterOptions.titlePropertyName"
+              (keyup)="updateJsonModel()"
+              placeholder="Title Property Name"
+            />
+          </mat-form-field>
+
+          <mat-form-field>
+            <input
+              matInput
+              [(ngModel)]="converterOptions.whiteList"
+              (keyup)="updateJsonModel()"
+              placeholder="White List"
+            />
+          </mat-form-field>
+
+          <mat-form-field>
+            <input
+              matInput
+              [(ngModel)]="converterOptions.blackList"
+              (keyup)="updateJsonModel()"
+              placeholder="Black List"
+            />
+          </mat-form-field>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+
+    <div id="csv-output-container" *ngIf="convertedCsv && tableData">
+      <h2>{{ convertedCsv.title }}</h2>
+      <mat-table #table [dataSource]="tableData" class="mat-elevation-z8">
+        <ng-container
+          *ngFor="let disCol of convertedCsv.columnNames; let colIndex = index"
+          matColumnDef="{{ disCol }}"
+        >
+          <mat-header-cell *matHeaderCellDef>{{ disCol }}</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element[disCol] }} </mat-cell>
+        </ng-container>
+
+        <mat-header-row
+          *matHeaderRowDef="convertedCsv.columnNames"
+        ></mat-header-row>
+        <mat-row
+          *matRowDef="let row; columns: convertedCsv.columnNames"
+        ></mat-row>
+      </mat-table>
+    </div>
+    <div>
+      <button mat-raised-button color="primary" matStepperPrevious>Back</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>
