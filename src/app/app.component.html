@@ -81,7 +81,7 @@
 
     <div id="csv-output-container" *ngIf="convertedCsv && tableData">
       <h2>{{ convertedCsv.title }}</h2>
-      <mat-table #table [dataSource]="tableData" class="mat-elevation-z8">
+      <mat-table #table [dataSource]="tableData" class="mat-elevation-z8" style="max-height: 50vh; overflow: auto;">
         <ng-container
           *ngFor="let disCol of convertedCsv.columnNames; let colIndex = index"
           matColumnDef="{{ disCol }}"
