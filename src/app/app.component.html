@@ -1,11 +1,15 @@
 <mat-toolbar color="primary">
-  <span>JSON&lt;-&gt;CSV</span>
+  <h1 style="font-family: 'Nunito', sans-serif;" [innerText]="'{csv}'"></h1>
 </mat-toolbar>
 
 <mat-horizontal-stepper>
   <mat-step>
     <ng-template matStepLabel>Enter JSON</ng-template>
-    <mat-grid-list cols="2" rowHeight="fit" style="height: calc(100vh - 200px);">
+    <mat-grid-list
+      cols="2"
+      rowHeight="fit"
+      style="height: calc(100vh - 200px);"
+    >
       <mat-grid-tile>
         <mat-form-field style="height: 100%; overflow: auto;">
           <textarea
@@ -20,7 +24,9 @@
       </mat-grid-tile>
 
       <mat-grid-tile>
-        <pre style="width: 100%; height: 100%; overflow: auto;">{{ jsonModel | json }}</pre>
+        <pre style="width: 100%; height: 100%; overflow: auto;">{{
+          jsonModel | json
+        }}</pre>
       </mat-grid-tile>
     </mat-grid-list>
 
@@ -91,6 +97,14 @@
           *matRowDef="let row; columns: convertedCsv.columnNames"
         ></mat-row>
       </mat-table>
+
+      <button style="margin-top: 15px; float: right;" mat-raised-button color="accent" (click)="downloadFile()" title="Download CSV">
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Download File"
+          >cloud_download</mat-icon
+        >
+      </button>
     </div>
     <div>
       <button mat-raised-button color="primary" matStepperPrevious>Back</button>

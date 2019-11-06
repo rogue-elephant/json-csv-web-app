@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {JsonCsvConverter, IJsonToCsvConversionStrategy, ConvertedCsv} from 'json-csv-tool';
 import { IRowValue } from 'json-csv-tool/lib/models/converted-csv';
 import { MatTableDataSource } from '@angular/material';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-root',
@@ -39,4 +40,9 @@ export class AppComponent {
   }
 
   getRowColValue = (row: IRowValue[], columnName: string) => row.filter(x => x.columnName === columnName)[0].value;
+
+  downloadFile() {
+    const blob = new Blob([this.convertedCsv.csv], {type: "text/plain;charset=utf-8"});
+    saveAs(blob, `${this.convertedCsv.title}.csv`);
+  }
 }
