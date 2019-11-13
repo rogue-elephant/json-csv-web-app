@@ -8,6 +8,17 @@ Uses [json-csv-tool](https://www.npmjs.com/package/json-csv-tool) to convert Jso
 
 ![](readme.gif)
 
+# Running the App
+1 - Make sure you have docker installed on your machine.
+
+2 - Clone the repo and cd to tthe project root.
+```docker build -t json-csv-web-app:dev .```
+
+3 - Once this has built the image you can then run:
+```docker run -it -p 4201:4200 -v ${PWD}:/app --rm json-csv-web-app:dev```
+
+4 - Once the angular app is running go to http://localhost:4201/
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.17.
 
 ## Development server
