@@ -4,6 +4,10 @@
 ![](https://img.shields.io/badge/using-typescript-008866?style=flat&logo=typescript)
 ![](https://img.shields.io/badge/using-angular-008866?style=flat&logo=angular)
 
+## Try me out!
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io#snapshot/fefdc08c-4812-4d24-a827-1d18bde8b8b2)
+
+
 Uses [json-csv-tool](https://www.npmjs.com/package/json-csv-tool) to convert Json (with options) into a rendered table (and at some point ability to download csv).
 
 ![](readme.gif)
