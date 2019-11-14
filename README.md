@@ -22,7 +22,7 @@ Uses [json-csv-tool](https://www.npmjs.com/package/json-csv-tool) to convert Jso
 3 - Once this has built the image you can then run:
 ```docker run -it -p 4200:4200 -v ${PWD}/src:/app/src --rm json-csv-web-app:dev```
 
-4 - Once the angular app is running go to http://localhost:4201/
+4 - Once the angular app is running go to http://localhost:4200/
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.17.
 
