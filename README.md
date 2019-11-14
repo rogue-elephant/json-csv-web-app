@@ -1,6 +1,7 @@
 # JsonCsvWebApp
-[![json-csv-tool npm](https://img.shields.io/badge/json--csv--tool-1.1.5-blue?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/json-csv-tool)
+[![json-csv-tool npm](https://img.shields.io/npm/v/json-csv-tool?label=json-csv-tool&logo=npm)](https://www.npmjs.com/package/json-csv-tool)
 
+[![codefactor](https://img.shields.io/codefactor/grade/github/rogue-elephant/json-csv-web-app?logo=codefactor)](https://www.codefactor.io/repository/github/rogue-elephant/json-csv-web-app/issues)
 ![](https://img.shields.io/badge/using-typescript-008866?style=flat&logo=typescript)
 ![](https://img.shields.io/badge/using-angular-008866?style=flat&logo=angular)
 
