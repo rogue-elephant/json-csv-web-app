@@ -20,7 +20,7 @@ Uses [json-csv-tool](https://www.npmjs.com/package/json-csv-tool) to convert Jso
 ```docker build -t json-csv-web-app:dev .```
 
 3 - Once this has built the image you can then run:
-```docker run -it -p 4201:4200 -v ${PWD}:/app --rm json-csv-web-app:dev```
+```docker run -it -p 4200:4200 -v ${PWD}/src:/app/src --rm json-csv-web-app:dev```
 
 4 - Once the angular app is running go to http://localhost:4201/
 
