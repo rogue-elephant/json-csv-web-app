@@ -1,20 +1,20 @@
-import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import {
   JsonCsvConverter,
   IJsonToCsvConversionStrategy,
   Table
-} from "json-csv-tool";
-import { IRowValue } from "json-csv-tool/lib/models/converted-csv";
-import { MatTableDataSource } from "@angular/material";
-import { saveAs } from "file-saver";
+} from 'json-csv-tool';
+import { IRowValue } from 'json-csv-tool/lib/models/converted-csv';
+import { MatTableDataSource } from '@angular/material';
+import { saveAs } from 'file-saver';
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = "json-csv-web-app";
+  title = 'json-csv-web-app';
   jsonInput: any;
   jsonModel: any;
   convertedTable: Table;
@@ -60,14 +60,14 @@ export class AppComponent implements OnInit {
       if (!this.convertedTable.title && this.convertedTable.rows.length > 0) {
         this.convertedTable.title = this.convertedTable.rows[0][0].columnName;
         this.convertedTable.title +=
-          this.convertedTable.title[this.convertedTable.title.length] === "s"
-            ? "es"
-            : "s";
+          this.convertedTable.title[this.convertedTable.title.length] === 's'
+            ? 'es'
+            : 's';
       }
 
       this.tableData = this.tableToMatTable(this.convertedTable);
       this.matTables.splice(0, 0, {
-        title: this.convertedTable.title || "Table",
+        title: this.convertedTable.title || 'Table',
         matTable: this.tableData,
         convertedtTable: this.convertedTable
       });
@@ -95,14 +95,14 @@ export class AppComponent implements OnInit {
       rowData.push(rowValue);
     });
     return new MatTableDataSource(rowData);
-  };
+  }
 
   getRowColValue = (row: IRowValue[], columnName: string) =>
-    row.filter(x => x.columnName === columnName)[0].value;
+    row.filter(x => x.columnName === columnName)[0].value
 
   downloadFile() {
     const blob = new Blob([this.convertedTable.csv], {
-      type: "text/plain;charset=utf-8"
+      type: 'text/plain;charset=utf-8'
     });
     saveAs(blob, `${this.convertedTable.title}.csv`);
   }
@@ -111,7 +111,7 @@ export class AppComponent implements OnInit {
     if (list) {
       converterList.push(list);
     }
-    this.currentWhitelist = this.currentBlacklist = "";
+    this.currentWhitelist = this.currentBlacklist = '';
     this.updateJsonModel();
   }
 
