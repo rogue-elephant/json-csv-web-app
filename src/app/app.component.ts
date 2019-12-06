@@ -23,7 +23,10 @@ export class AppComponent implements OnInit {
     matTable: MatTableDataSource<any>;
     convertedtTable: Table;
   }[] = [];
-  converterOptions: IJsonToCsvConversionStrategy = { whiteList: [], blackList: [] };
+  converterOptions: IJsonToCsvConversionStrategy = {
+    whiteList: [],
+    blackList: []
+  };
   currentWhitelist: string;
   currentBlacklist: string;
   loading = true;
@@ -41,19 +44,25 @@ export class AppComponent implements OnInit {
     try {
       this.jsonModel = JSON.parse(this.jsonInput);
       const converter = new JsonCsvConverter();
-      const convertedJson = converter.convertJsonToCsv(
-        this.jsonModel,
-        {
-          ...this.converterOptions,
-          blackList: this.converterOptions.blackList.length > 0 ? this.converterOptions.blackList : null,
-          whiteList: this.converterOptions.whiteList.length > 0 ? this.converterOptions.whiteList : null
-        }
-      );
+      const convertedJson = converter.convertJsonToCsv(this.jsonModel, {
+        ...this.converterOptions,
+        blackList:
+          this.converterOptions.blackList.length > 0
+            ? this.converterOptions.blackList
+            : null,
+        whiteList:
+          this.converterOptions.whiteList.length > 0
+            ? this.converterOptions.whiteList
+            : null
+      });
       this.matTables = [];
       this.convertedTable = convertedJson;
-      if(!this.convertedTable.title && this.convertedTable.rows.length > 0) {
+      if (!this.convertedTable.title && this.convertedTable.rows.length > 0) {
         this.convertedTable.title = this.convertedTable.rows[0][0].columnName;
-        this.convertedTable.title += this.convertedTable.title[this.convertedTable.title.length] === 's' ? 'es' : 's';
+        this.convertedTable.title +=
+          this.convertedTable.title[this.convertedTable.title.length] === "s"
+            ? "es"
+            : "s";
       }
 
       this.tableData = this.tableToMatTable(this.convertedTable);
@@ -102,12 +111,21 @@ export class AppComponent implements OnInit {
     if (list) {
       converterList.push(list);
     }
-    this.currentWhitelist = this.currentBlacklist = '';
+    this.currentWhitelist = this.currentBlacklist = "";
     this.updateJsonModel();
   }
 
   removeFromList(index, converterList: any[]) {
     converterList.splice(index, 1);
     this.updateJsonModel();
+  }
+
+  handleFile(file: any) {
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.jsonInput = e.target.result;
+      this.updateJsonModel();
+    };
+    reader.readAsText(file.target.files[0]);
   }
 }

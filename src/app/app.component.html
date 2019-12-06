@@ -9,6 +9,13 @@
 <mat-horizontal-stepper>
   <mat-step>
     <ng-template matStepLabel>Enter JSON</ng-template>
+    <input
+      id="file-selector"
+      name="file-selector"
+      type="file"
+      class="filepicker"
+      (change)="handleFile($event)"
+    />
     <mat-grid-list
       cols="2"
       rowHeight="fit"
