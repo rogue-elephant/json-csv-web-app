@@ -33,3 +33,17 @@ mat-form-field {
   white-space: pre-wrap;
   padding: 16px;
 }
+
+#loading {
+  position: absolute;
+  width: 100%;
+  height: calc(100% - 64px);
+  background: rgba(0,0,0,0.3);
+  z-index: 999;
+
+  > * {
+    position: absolute;
+    left: calc(50% - 15px);
+    top: calc(50% - 15px);
+  }
+}

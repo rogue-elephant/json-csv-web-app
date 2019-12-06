@@ -2,6 +2,10 @@
   <h1 style="font-family: 'Nunito', sans-serif;" [innerText]="'{csv}'"></h1>
 </mat-toolbar>
 
+<div id="loading" *ngIf="loading">
+  <mat-progress-spinner [mode]="'indeterminate'"> </mat-progress-spinner>
+</div>
+
 <mat-horizontal-stepper>
   <mat-step>
     <ng-template matStepLabel>Enter JSON</ng-template>
@@ -58,20 +62,58 @@
             />
           </mat-form-field>
 
+          <mat-list>
+            <mat-list-item
+              role="listitem"
+              *ngFor="let x of converterOptions.whiteList; let i = index"
+            >
+              {{ converterOptions.whiteList[i] }}
+              <button mat-button color="accent">
+                <mat-icon
+                  color="accent"
+                  aria-hidden="false"
+                  aria-label="Remove Item"
+                  (click)="removeFromList(i, converterOptions.whiteList)"
+                  >remove_circle</mat-icon
+                >
+              </button></mat-list-item
+            >
+          </mat-list>
           <mat-form-field>
             <input
               matInput
-              [(ngModel)]="converterOptions.whiteList"
-              (keyup)="updateJsonModel()"
+              [(ngModel)]="currentWhitelist"
+              (keyup.enter)="
+                addToList(currentWhitelist, converterOptions.whiteList)
+              "
               placeholder="White List"
             />
           </mat-form-field>
 
+          <mat-list>
+            <mat-list-item
+              role="listitem"
+              *ngFor="let x of converterOptions.blackList; let i = index"
+            >
+              {{ converterOptions.blackList[i] }}
+              <button mat-button color="accent">
+                <mat-icon
+                  color="accent"
+                  aria-hidden="false"
+                  aria-label="Remove Item"
+                  (click)="removeFromList(i, converterOptions.whiteList)"
+                  >remove_circle</mat-icon
+                >
+              </button>
+            </mat-list-item>
+          </mat-list>
           <mat-form-field>
             <input
               matInput
-              [(ngModel)]="converterOptions.blackList"
-              (keyup)="updateJsonModel()"
+              [(ngModel)]="currentBlacklist"
+              (keyup.enter)="
+                addToList(currentBlacklist, converterOptions.blackList)
+              "
               placeholder="Black List"
             />
           </mat-form-field>
@@ -79,29 +121,51 @@
       </mat-accordion>
     </div>
 
-    <div id="csv-output-container" *ngIf="convertedCsv && tableData">
-      <h2>{{ convertedCsv.title }}</h2>
-      <mat-table #table [dataSource]="tableData" class="mat-elevation-z8" style="max-height: 50vh; overflow: auto;">
-        <ng-container
-          *ngFor="let disCol of convertedCsv.columnNames; let colIndex = index"
-          matColumnDef="{{ disCol }}"
+    <div
+      id="csv-output-container"
+      *ngIf="convertedTable && matTables.length > 0"
+    >
+      <div *ngFor="let matTableTuple of matTables">
+        <h2>{{ matTableTuple.title }}</h2>
+        <mat-table
+          #table
+          [dataSource]="matTableTuple.matTable"
+          class="mat-elevation-z8"
+          style="max-height: 50vh; overflow: auto;"
         >
-          <mat-header-cell *matHeaderCellDef>{{ disCol }}</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{ element[disCol] }} </mat-cell>
-        </ng-container>
+          <ng-container
+            *ngFor="
+              let disCol of matTableTuple.convertedtTable.columnNames;
+              let colIndex = index
+            "
+            matColumnDef="{{ disCol }}"
+          >
+            <mat-header-cell *matHeaderCellDef>{{ disCol }}</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element[disCol] }}
+            </mat-cell>
+          </ng-container>
 
-        <mat-header-row
-          *matHeaderRowDef="convertedCsv.columnNames"
-        ></mat-header-row>
-        <mat-row
-          *matRowDef="let row; columns: convertedCsv.columnNames"
-        ></mat-row>
-      </mat-table>
+          <mat-header-row
+            *matHeaderRowDef="matTableTuple.convertedtTable.columnNames"
+          ></mat-header-row>
+          <mat-row
+            *matRowDef="
+              let row;
+              columns: matTableTuple.convertedtTable.columnNames
+            "
+          ></mat-row>
+        </mat-table>
+      </div>
 
-      <button style="margin-top: 15px; float: right;" mat-raised-button color="accent" (click)="downloadFile()" title="Download CSV">
-        <mat-icon
-          aria-hidden="false"
-          aria-label="Download File"
+      <button
+        style="margin-top: 15px; float: right;"
+        mat-raised-button
+        color="accent"
+        (click)="downloadFile()"
+        title="Download CSV"
+      >
+        <mat-icon aria-hidden="false" aria-label="Download File"
           >cloud_download</mat-icon
         >
       </button>
