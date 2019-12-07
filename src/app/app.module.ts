@@ -17,9 +17,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatListModule } from '@angular/material/list';
+import { InputJsonSectionComponent } from './sections/input-json-section/input-json-section.component';
+import { JsonService } from './shared/json.service';
+import { OutputSectionComponent } from './sections/output-section/output-section.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, InputJsonSectionComponent, OutputSectionComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -38,7 +41,7 @@ import { MatListModule } from '@angular/material/list';
     MatProgressSpinnerModule,
     MatListModule
   ],
-  providers: [CdkColumnDef],
+  providers: [CdkColumnDef, JsonService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

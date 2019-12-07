@@ -1,0 +1,29 @@
+<input
+  id="file-selector"
+  name="file-selector"
+  type="file"
+  class="filepicker"
+  (change)="handleFile($event)"
+/>
+<mat-grid-list cols="2" rowHeight="fit" style="height: calc(100vh - 230px);">
+  <mat-grid-tile>
+    <mat-form-field style="height: 100%; overflow: auto;">
+      <textarea
+        matInput
+        placeholder="...Or write/paste JSON here"
+        matTextareaAutosize
+        cols="50"
+        (keyup)="jsonInputUpdated($event)"
+      ></textarea>
+    </mat-form-field>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <pre style="width: 100%; height: 100%; overflow: auto;">{{
+      (jsonService.jsonObject | json) || "JSON Preview"
+    }}</pre>
+    <span *ngIf="jsonError" style="font-size: 1.3rem;color:red;">{{
+      jsonError
+    }}</span>
+  </mat-grid-tile>
+</mat-grid-list>
