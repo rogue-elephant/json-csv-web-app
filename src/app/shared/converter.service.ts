@@ -1,7 +1,11 @@
 import { Injectable } from "@angular/core";
-import { Table, IJsonToCsvConversionStrategy, JsonCsvConverter } from "json-csv-tool";
-import { JsonService } from './json.service';
-import { MatTableDataSource } from '@angular/material';
+import {
+  Table,
+  IJsonToCsvConversionStrategy,
+  JsonCsvConverter
+} from "json-csv-tool";
+import { JsonService } from "./json.service";
+import { MatTableDataSource } from "@angular/material";
 
 @Injectable({
   providedIn: "root"
@@ -9,7 +13,8 @@ import { MatTableDataSource } from '@angular/material';
 export class ConverterService {
   public convertedTable: Table;
   public converterOptions: IJsonToCsvConversionStrategy;
-  matTables: {
+  public propNames: string[] = [];
+  public matTables: {
     title: string;
     matTable: MatTableDataSource<any>;
     convertedtTable: Table;
@@ -46,6 +51,26 @@ export class ConverterService {
           this.convertedTable.title[this.convertedTable.title.length] === "s"
             ? "es"
             : "s";
+      }
+
+      if (this.converterOptions.whiteList.length < 1) {
+        this.propNames = [
+          ...this.convertedTable.columnNames,
+          ...(this.convertedTable.rows
+            .filter(x => x.filter(y => y.linkedTable != null).length > 0)
+            .map(x => x.filter(y => y.linkedTable != null))
+            .map(x =>
+              x.reduce(
+                (acc, y) =>
+                  acc.concat(
+                    y.linkedTable.columnNames.map(
+                      z => y.linkedTable.title + "." + z
+                    )
+                  ),
+                []
+              )
+            )[0] || [])
+        ].sort();
       }
     } catch (error) {}
   }

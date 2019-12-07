@@ -3,12 +3,13 @@ import {
   JsonCsvConverter,
   IJsonToCsvConversionStrategy,
   Table
-} from 'json-csv-tool';
-import { IRowValue } from 'json-csv-tool/lib/models/converted-csv';
-import { MatTableDataSource } from '@angular/material';
-import { saveAs } from 'file-saver';
-import { JsonService } from 'src/app/shared/json.service';
-import { ConverterService } from 'src/app/shared/converter.service';
+} from "json-csv-tool";
+import { IRowValue } from "json-csv-tool/lib/models/converted-csv";
+import { MatTableDataSource } from "@angular/material";
+import { saveAs } from "file-saver";
+import { JsonService } from "src/app/shared/json.service";
+import { ConverterService } from "src/app/shared/converter.service";
+import { FormControl } from "@angular/forms";
 
 @Component({
   selector: "app-output-section",
@@ -18,15 +19,21 @@ import { ConverterService } from 'src/app/shared/converter.service';
 export class OutputSectionComponent implements OnInit {
   @Output()
   loading: EventEmitter<boolean> = new EventEmitter<boolean>();
+  whitelist = new FormControl();
+  blacklist = new FormControl();
   currentWhitelist: string;
   currentBlacklist: string;
 
+  rowDatas: [][] = [];
+
   tableData: MatTableDataSource<any>;
 
-  constructor(public jsonService: JsonService, public converterService: ConverterService) {}
+  constructor(
+    public jsonService: JsonService,
+    public converterService: ConverterService
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   trackByIndex = (index: number, obj: any): any => index;
 
@@ -34,8 +41,11 @@ export class OutputSectionComponent implements OnInit {
     this.loading.emit(true);
     try {
       this.converterService.matTables = [];
+      this.converterService.converterOptions.whiteList = this.whitelist.value;
       this.converterService.convertJsonModel();
-      this.tableData = this.tableToMatTable(this.converterService.convertedTable);
+      this.tableData = this.tableToMatTable(
+        this.converterService.convertedTable
+      );
       this.converterService.matTables.splice(0, 0, {
         title: this.converterService.convertedTable.title || "Table",
         matTable: this.tableData,
@@ -65,7 +75,7 @@ export class OutputSectionComponent implements OnInit {
       rowData.push(rowValue);
     });
     return new MatTableDataSource(rowData);
-  };
+  }
 
   getRowColValue = (row: IRowValue[], columnName: string) =>
     row.filter(x => x.columnName === columnName)[0].value;
@@ -75,18 +85,5 @@ export class OutputSectionComponent implements OnInit {
       type: "text/plain;charset=utf-8"
     });
     saveAs(blob, `${this.converterService.convertedTable.title}.csv`);
-  }
-
-  addToList(list, converterList) {
-    if (list) {
-      converterList.push(list);
-    }
-    this.currentWhitelist = this.currentBlacklist = "";
-    this.convertJsonModel();
-  }
-
-  removeFromList(index, converterList: any[]) {
-    converterList.splice(index, 1);
-    this.convertJsonModel();
   }
 }

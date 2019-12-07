@@ -9,7 +9,7 @@
 <mat-horizontal-stepper>
   <mat-step>
     <ng-template matStepLabel>Enter JSON</ng-template>
-    <app-input-json-section></app-input-json-section>
+    <app-input-json-section (jsonChangedEvent)="handleJsonChangedEvent()"></app-input-json-section>
 
     <div>
       <button mat-raised-button color="primary" matStepperNext>Next</button>
