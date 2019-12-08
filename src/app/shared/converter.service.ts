@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import {
-  Table,
-  IJsonToCsvConversionStrategy,
-  JsonCsvConverter
-} from "json-csv-tool";
+  RelationalJson,
+  IConversionStrategy,
+  Converter
+} from "json-conversion-tool";
 import { JsonService } from "./json.service";
 import { MatTableDataSource } from "@angular/material";
 
@@ -11,8 +11,8 @@ import { MatTableDataSource } from "@angular/material";
   providedIn: "root"
 })
 export class ConverterService {
-  public convertedTable: Table;
-  public converterOptions: IJsonToCsvConversionStrategy;
+  public convertedTable: RelationalJson;
+  public converterOptions: IConversionStrategy;
   public propNameGroups: {
     group: string;
     showInBlacklist: true;
@@ -26,7 +26,7 @@ export class ConverterService {
   public matTables: {
     title: string;
     matTable: MatTableDataSource<any>;
-    convertedtTable: Table;
+    convertedTable: RelationalJson;
   }[] = [];
 
   constructor(private jsonService: JsonService) {
@@ -38,8 +38,8 @@ export class ConverterService {
 
   convertJsonModel() {
     try {
-      const converter = new JsonCsvConverter();
-      const convertedJson = converter.convertJsonToCsv(
+      const converter = new Converter();
+      const convertedJson = converter.convertJson(
         this.jsonService.jsonObject,
         {
           ...this.converterOptions,
@@ -54,14 +54,11 @@ export class ConverterService {
         }
       );
       this.convertedTable = convertedJson;
-      if (!this.convertedTable.title && this.convertedTable.rows.length > 0) {
-        this.convertedTable.title = this.convertedTable.rows[0][0].columnName;
-      }
 
       if (this.converterOptions.whiteList.length < 1) {
         this.propNameGroups = [];
         this.propNameGroups.push({
-          group: this.convertedTable.title,
+          group: 'Base Properties',
           showInBlacklist: true,
           showInWhitelist: true,
           props: this.convertedTable.columnNames.map(colName => {

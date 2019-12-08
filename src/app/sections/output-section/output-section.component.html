@@ -109,7 +109,7 @@
     >
       <ng-container
         *ngFor="
-          let disCol of matTableTuple.convertedtTable.columnNames;
+          let disCol of matTableTuple.convertedTable.columnNames;
           let colIndex = index
         "
         matColumnDef="{{ disCol }}"
@@ -121,10 +121,10 @@
       </ng-container>
 
       <mat-header-row
-        *matHeaderRowDef="matTableTuple.convertedtTable.columnNames"
+        *matHeaderRowDef="matTableTuple.convertedTable.columnNames"
       ></mat-header-row>
       <mat-row
-        *matRowDef="let row; columns: matTableTuple.convertedtTable.columnNames"
+        *matRowDef="let row; columns: matTableTuple.convertedTable.columnNames"
       ></mat-row>
     </mat-table>
   </div>

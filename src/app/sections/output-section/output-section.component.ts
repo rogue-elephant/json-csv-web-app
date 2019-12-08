@@ -1,16 +1,16 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import {
-  JsonCsvConverter,
-  IJsonToCsvConversionStrategy,
-  Table
-} from "json-csv-tool";
-import { IRowValue } from "json-csv-tool/lib/models/converted-csv";
+  Converter,
+  IConversionStrategy,
+  RelationalJson,
+  IRowValue,
+  OutputGenerator
+} from "json-conversion-tool";
 import { MatTableDataSource } from "@angular/material";
 import { saveAs } from "file-saver";
 import { JsonService } from "src/app/shared/json.service";
 import { ConverterService } from "src/app/shared/converter.service";
 import { FormControl } from "@angular/forms";
-import { take, takeUntil, filter } from "rxjs/operators";
 
 @Component({
   selector: "app-output-section",
@@ -88,14 +88,14 @@ export class OutputSectionComponent implements OnInit {
       this.converterService.matTables.splice(0, 0, {
         title: this.converterService.convertedTable.title || "Table",
         matTable: this.tableData,
-        convertedtTable: this.converterService.convertedTable
+        convertedTable: this.converterService.convertedTable
       });
     } catch (error) {}
 
     this.loading.emit(false);
   }
 
-  tableToMatTable = (table: Table) => {
+  tableToMatTable = (table: RelationalJson) => {
     const rowData = [];
     table.rows.forEach(row => {
       const rowValue = {};
@@ -107,7 +107,7 @@ export class OutputSectionComponent implements OnInit {
           this.converterService.matTables.push({
             title: `${row[0].value}: ${rowCol.linkedTable.title}`,
             matTable: this.tableToMatTable(rowCol.linkedTable),
-            convertedtTable: rowCol.linkedTable
+            convertedTable: rowCol.linkedTable
           });
         }
       });
@@ -120,9 +120,10 @@ export class OutputSectionComponent implements OnInit {
     row.filter(x => x.columnName === columnName)[0].value;
 
   downloadFile() {
-    const blob = new Blob([this.converterService.convertedTable.csv], {
+    const csv = new OutputGenerator(this.converterService.convertedTable).generateCsv();
+    const blob = new Blob([csv], {
       type: "text/plain;charset=utf-8"
     });
-    saveAs(blob, `${this.converterService.convertedTable.title}.csv`);
+    saveAs(blob, `${this.converterService.convertedTable.title || 'Converted JSON'}.csv`);
   }
 }
