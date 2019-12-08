@@ -33,7 +33,7 @@ export class InputJsonSectionComponent implements OnInit {
     this.converterService.matTables = [];
     try {
       this.jsonService.jsonObject = JSON.parse(jsonInput);
-      this.converterService.propNames = [];
+      this.converterService.propNameGroups = [];
       this.converterService.converterOptions.whiteList = [];
       this.converterService.converterOptions.blackList = [];
       this.converterService.convertJsonModel();

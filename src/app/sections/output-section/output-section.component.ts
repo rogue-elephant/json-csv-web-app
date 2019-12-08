@@ -10,6 +10,7 @@ import { saveAs } from "file-saver";
 import { JsonService } from "src/app/shared/json.service";
 import { ConverterService } from "src/app/shared/converter.service";
 import { FormControl } from "@angular/forms";
+import { take, takeUntil, filter } from "rxjs/operators";
 
 @Component({
   selector: "app-output-section",
@@ -21,6 +22,8 @@ export class OutputSectionComponent implements OnInit {
   loading: EventEmitter<boolean> = new EventEmitter<boolean>();
   whitelist = new FormControl();
   blacklist = new FormControl();
+  whitelistSearchControl = new FormControl();
+  blacklistSearchControl = new FormControl();
   currentWhitelist: string;
   currentBlacklist: string;
 
@@ -33,7 +36,43 @@ export class OutputSectionComponent implements OnInit {
     public converterService: ConverterService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    [this.whitelistSearchControl, this.blacklistSearchControl].forEach(
+      control =>
+        control.valueChanges.pipe().subscribe(() => {
+          this.filterPropGroups();
+        })
+    );
+  }
+
+  filterPropGroups() {
+    [
+      [this.whitelistSearchControl, "Whitelist"],
+      [this.blacklistSearchControl, "Blacklist"]
+    ].forEach(controlTuple => {
+      let search = (controlTuple[0] as FormControl).value;
+      const showInListProp = `showIn${controlTuple[1]}`;
+      this.converterService.propNameGroups.forEach(group => {
+        group[showInListProp] = true;
+        group.props.forEach(prop => prop[showInListProp] = true);
+      });
+      if (!search) {
+        return;
+      } else {
+        search = search.toLowerCase();
+      }
+      this.converterService.propNameGroups.forEach(group => {
+        group[showInListProp] = false;
+        group.props.forEach(prop => {
+          if (prop.name.toLowerCase().startsWith(search)) {
+            group[showInListProp] = prop[showInListProp] = true;
+          } else {
+            prop[showInListProp] = false;
+          }
+        });
+      });
+    });
+  }
 
   trackByIndex = (index: number, obj: any): any => index;
 
@@ -75,7 +114,7 @@ export class OutputSectionComponent implements OnInit {
       rowData.push(rowValue);
     });
     return new MatTableDataSource(rowData);
-  }
+  };
 
   getRowColValue = (row: IRowValue[], columnName: string) =>
     row.filter(x => x.columnName === columnName)[0].value;

@@ -20,5 +20,7 @@ export class AppComponent implements OnInit {
   handleJsonChangedEvent() {
     this.outputComponent.whitelist.reset();
     this.outputComponent.blacklist.reset();
+    this.outputComponent.blacklistSearchControl.reset();
+    this.outputComponent.whitelistSearchControl.reset();
   }
 }

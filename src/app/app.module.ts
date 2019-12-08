@@ -17,10 +17,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatListModule } from '@angular/material/list';
-import { MatSelectModule } from '@angular/material/select'
+import { MatSelectModule } from '@angular/material/select';
 import { InputJsonSectionComponent } from './sections/input-json-section/input-json-section.component';
 import { JsonService } from './shared/json.service';
 import { OutputSectionComponent } from './sections/output-section/output-section.component';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 @NgModule({
   declarations: [AppComponent, InputJsonSectionComponent, OutputSectionComponent],
@@ -41,7 +42,8 @@ import { OutputSectionComponent } from './sections/output-section/output-section
     MatGridListModule,
     MatProgressSpinnerModule,
     MatListModule,
-    MatSelectModule
+    MatSelectModule,
+    NgxMatSelectSearchModule
   ],
   providers: [CdkColumnDef, JsonService],
   bootstrap: [AppComponent]

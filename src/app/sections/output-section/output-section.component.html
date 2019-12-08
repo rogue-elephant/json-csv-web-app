@@ -20,27 +20,63 @@
 
       <mat-form-field *ngIf="converterService.convertedTable">
         <mat-label>Whitelisted properties</mat-label>
-        <mat-select [formControl]="whitelist" multiple>
-          <mat-option
-            *ngFor="let propName of converterService.propNames"
-            [value]="propName"
-          >
-            {{ propName }}
+        <mat-select
+          [formControl]="whitelist"
+          placeholder="Search for property name"
+          multiple
+        >
+          <mat-option>
+            <ngx-mat-select-search
+              [disableScrollToActiveOnOptionsChanged]="true"
+              [placeholderLabel]="'Search for JSON properties'"
+              [clearSearchInput]="false"
+              [formControl]="whitelistSearchControl"
+            ></ngx-mat-select-search>
           </mat-option>
+          <div *ngFor="let group of converterService.propNameGroups">
+            <mat-optgroup [label]="group.group" *ngIf="group.showInWhitelist">
+              <mat-option
+                class="list-options"
+                *ngFor="let prop of group.props"
+                [disabled]="!prop.showInWhitelist"
+                [value]="prop.name"
+              >
+                {{ prop.name }}
+              </mat-option>
+            </mat-optgroup>
+          </div>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field *ngIf="converterService.convertedTable">
-          <mat-label>Blacklisted properties</mat-label>
-          <mat-select [formControl]="blacklist" multiple>
-            <mat-option
-              *ngFor="let propName of converterService.propNames"
-              [value]="propName"
-            >
-              {{ propName }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <mat-label>Blacklisted properties</mat-label>
+        <mat-select
+          [formControl]="blacklist"
+          placeholder="Search for property name"
+          multiple
+        >
+          <mat-option>
+            <ngx-mat-select-search
+              [disableScrollToActiveOnOptionsChanged]="true"
+              [placeholderLabel]="'Search for JSON properties'"
+              [clearSearchInput]="false"
+              [formControl]="blacklistSearchControl"
+            ></ngx-mat-select-search>
+          </mat-option>
+          <div *ngFor="let group of converterService.propNameGroups">
+            <mat-optgroup [label]="group.group" *ngIf="group.showInBlacklist">
+              <mat-option
+                class="list-options"
+                *ngFor="let prop of group.props"
+                [hidden]="prop.showInBlacklist"
+                [value]="prop.name"
+              >
+                {{ prop.name }}
+              </mat-option>
+            </mat-optgroup>
+          </div>
+        </mat-select>
+      </mat-form-field>
     </mat-expansion-panel>
   </mat-accordion>
 </div>
