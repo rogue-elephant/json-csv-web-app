@@ -1,5 +1,5 @@
 # JsonCsvWebApp
-[![json-csv-tool npm](https://img.shields.io/npm/v/json-csv-tool?label=json-csv-tool&logo=npm)](https://www.npmjs.com/package/json-csv-tool)
+[![json-conversion-tool npm](https://img.shields.io/npm/v/json-conversion-tool?label=json-conversion-tool&logo=npm)](https://www.npmjs.com/package/json-conversion-tool)
 
 [![codefactor](https://img.shields.io/codefactor/grade/github/rogue-elephant/json-csv-web-app?logo=codefactor)](https://www.codefactor.io/repository/github/rogue-elephant/json-csv-web-app/issues)
 ![](https://img.shields.io/badge/using-typescript-008866?style=flat&logo=typescript)
@@ -9,7 +9,7 @@
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io#snapshot/fefdc08c-4812-4d24-a827-1d18bde8b8b2)
 
 
-Uses [json-csv-tool](https://www.npmjs.com/package/json-csv-tool) to convert Json (with options) into a rendered table (and at some point ability to download csv).
+Uses [json-conversion-tool](https://www.npmjs.com/package/json-conversion-tool) to convert Json (with options) into a rendered table (and at some point ability to download csv).
 
 ![](readme.gif)
 

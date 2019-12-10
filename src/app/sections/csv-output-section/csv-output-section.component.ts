@@ -13,11 +13,11 @@ import { ConverterService } from "src/app/shared/converter.service";
 import { FormControl } from "@angular/forms";
 
 @Component({
-  selector: "app-output-section",
-  templateUrl: "./output-section.component.html",
-  styleUrls: ["./output-section.component.css"]
+  selector: "app-csv-output-section",
+  templateUrl: "./csv-output-section.component.html",
+  styleUrls: ["./csv-output-section.component.css"]
 })
-export class OutputSectionComponent implements OnInit {
+export class CsvOutputSectionComponent implements OnInit {
   @Output()
   loading: EventEmitter<boolean> = new EventEmitter<boolean>();
   whitelist = new FormControl();

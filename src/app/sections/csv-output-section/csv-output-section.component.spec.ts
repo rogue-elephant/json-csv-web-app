@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { OutputSectionComponent } from './output-section.component';
+import { CsvOutputSectionComponent } from './csv-output-section.component';
 
 describe('OutputSectionComponent', () => {
-  let component: OutputSectionComponent;
-  let fixture: ComponentFixture<OutputSectionComponent>;
+  let component: CsvOutputSectionComponent;
+  let fixture: ComponentFixture<CsvOutputSectionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OutputSectionComponent ]
+      declarations: [ CsvOutputSectionComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OutputSectionComponent);
+    fixture = TestBed.createComponent(CsvOutputSectionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

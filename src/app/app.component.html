@@ -17,8 +17,19 @@
   </mat-step>
 
   <mat-step>
-    <ng-template matStepLabel>Output</ng-template>
-      <app-output-section></app-output-section>
+    <ng-template matStepLabel>CSV Output</ng-template>
+      <app-csv-output-section></app-csv-output-section>
+    <div>
+      <button mat-raised-button color="primary" matStepperPrevious>Back</button>
+      <div>
+        <button mat-raised-button color="primary" matStepperNext>Next</button>
+      </div>
+    </div>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Markdown Output</ng-template>
+      <app-markdown-output-section></app-markdown-output-section>
     <div>
       <button mat-raised-button color="primary" matStepperPrevious>Back</button>
     </div>

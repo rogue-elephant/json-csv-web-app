@@ -20,11 +20,13 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { InputJsonSectionComponent } from './sections/input-json-section/input-json-section.component';
 import { JsonService } from './shared/json.service';
-import { OutputSectionComponent } from './sections/output-section/output-section.component';
+import { CsvOutputSectionComponent } from './sections/csv-output-section/csv-output-section.component';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { MarkdownOutputSectionComponent } from './sections/markdown-output-section/markdown-output-section.component';
+import { ShowdownModule } from 'ngx-showdown';
 
 @NgModule({
-  declarations: [AppComponent, InputJsonSectionComponent, OutputSectionComponent],
+  declarations: [AppComponent, InputJsonSectionComponent, CsvOutputSectionComponent, MarkdownOutputSectionComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -43,7 +45,8 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     MatProgressSpinnerModule,
     MatListModule,
     MatSelectModule,
-    NgxMatSelectSearchModule
+    NgxMatSelectSearchModule,
+    ShowdownModule.forRoot({emoji: true, noHeaderId: true, flavor: 'github'})
   ],
   providers: [CdkColumnDef, JsonService],
   bootstrap: [AppComponent]

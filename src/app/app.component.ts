@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { OutputSectionComponent } from './sections/output-section/output-section.component';
+import { CsvOutputSectionComponent } from './sections/csv-output-section/csv-output-section.component';
+import { MarkdownOutputSectionComponent } from './sections/markdown-output-section/markdown-output-section.component';
 
 @Component({
   selector: 'app-root',
@@ -10,17 +11,22 @@ export class AppComponent implements OnInit {
   title = 'json-csv-web-app';
   loading = true;
 
-  @ViewChild(OutputSectionComponent, {static: false})
-  outputComponent: OutputSectionComponent;
+  @ViewChild(CsvOutputSectionComponent, {static: false})
+  csvOutputComponent: CsvOutputSectionComponent;
+
+  @ViewChild(MarkdownOutputSectionComponent, {static: false})
+  markdownOutputComponent: MarkdownOutputSectionComponent;
 
   ngOnInit() {
     this.loading = false;
   }
 
   handleJsonChangedEvent() {
-    this.outputComponent.whitelist.reset();
-    this.outputComponent.blacklist.reset();
-    this.outputComponent.blacklistSearchControl.reset();
-    this.outputComponent.whitelistSearchControl.reset();
+    [this.csvOutputComponent, this.markdownOutputComponent].forEach(component => {
+      component.whitelist.reset();
+      component.blacklist.reset();
+      component.blacklistSearchControl.reset();
+      component.whitelistSearchControl.reset();
+    });
   }
 }

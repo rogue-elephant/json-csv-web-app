@@ -51,3 +51,16 @@ mat-form-field {
 .list-options.mat-option[aria-disabled=true] {
   display: none;
 }
+
+#markdown-output-container {
+  table {
+    border-collapse: collapse;
+    th,td {
+      text-align: left;
+      padding: 8px;
+    }
+  }
+  table, th, td {
+    border: 1px solid black;
+  }
+}

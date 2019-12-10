@@ -1,0 +1,123 @@
+<div *ngIf="converterService.converterOptions">
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Options
+        </mat-panel-title>
+        <mat-panel-description>
+          Configure the output
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="converterService.converterOptions.titlePropertyName"
+          (keyup)="convertJsonModel()"
+          placeholder="Title Property Name"
+        />
+      </mat-form-field>
+
+      <mat-form-field *ngIf="converterService.convertedTable">
+        <mat-label>Whitelisted properties</mat-label>
+        <mat-select
+          [formControl]="whitelist"
+          placeholder="Search for property name"
+          multiple
+        >
+          <mat-option>
+            <ngx-mat-select-search
+              [disableScrollToActiveOnOptionsChanged]="true"
+              [placeholderLabel]="'Search for JSON properties'"
+              [clearSearchInput]="false"
+              [noEntriesFoundLabel]="'No results'"
+              [formControl]="whitelistSearchControl"
+            ></ngx-mat-select-search>
+          </mat-option>
+          <div *ngFor="let group of converterService.propNameGroups">
+            <mat-optgroup [label]="group.group" *ngIf="group.showInWhitelist">
+              <mat-option
+                class="list-options"
+                *ngFor="let prop of group.props"
+                [disabled]="!prop.showInWhitelist"
+                [value]="prop.name"
+              >
+                {{ prop.name }}
+              </mat-option>
+            </mat-optgroup>
+          </div>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="converterService.convertedTable">
+        <mat-label>Blacklisted properties</mat-label>
+        <mat-select
+          [formControl]="blacklist"
+          placeholder="Search for property name"
+          multiple
+        >
+          <mat-option>
+            <ngx-mat-select-search
+              [disableScrollToActiveOnOptionsChanged]="true"
+              [placeholderLabel]="'Search for JSON properties'"
+              [clearSearchInput]="false"
+              [noEntriesFoundLabel]="'No results'"
+              [formControl]="blacklistSearchControl"
+            ></ngx-mat-select-search>
+          </mat-option>
+          <div *ngFor="let group of converterService.propNameGroups">
+            <mat-optgroup [label]="group.group" *ngIf="group.showInBlacklist">
+              <mat-option
+                class="list-options"
+                *ngFor="let prop of group.props"
+                [hidden]="prop.showInBlacklist"
+                [value]="prop.name"
+              >
+                {{ prop.name }}
+              </mat-option>
+            </mat-optgroup>
+          </div>
+        </mat-select>
+      </mat-form-field>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+<button
+  *ngIf="jsonService.jsonObject"
+  style="margin-top: 15px; float: right;"
+  mat-raised-button
+  color="accent"
+  (click)="convertJsonModel()"
+  title="Preview"
+>
+  preview
+</button>
+
+<div id="markdown-output-container" *ngIf="markdown">
+  <mat-grid-list cols="2" rowHeight="fit" style="height: calc(60vh);margin-top: 50px;">
+    <mat-grid-tile>
+      <pre style="width: 100%; height: 100%; overflow: auto;">{{
+        markdown
+      }}</pre>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <showdown
+        style="width: 100%; height: 100%; overflow: auto;"
+        [value]="markdown"
+      ></showdown>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <button
+    style="margin-top: 15px;margin-left: 15px;float: right;"
+    mat-raised-button
+    color="accent"
+    (click)="downloadFile()"
+    title="Download Markdown"
+  >
+    <mat-icon aria-hidden="false" aria-label="Download File"
+      >cloud_download</mat-icon
+    >
+  </button>
+</div>
